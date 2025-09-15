@@ -1,0 +1,92 @@
+package com.example.conexaoapi;
+
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.conexaoapi.adapter.PhotoAdapter;
+import com.example.conexaoapi.api.PhotoApi;
+import com.example.conexaoapi.model.Photo;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class GetPhotos extends AppCompatActivity {
+
+    private Retrofit retrofit;
+    private RecyclerView recycleView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_get_photos);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        // Montar o Recycleview
+
+        recycleView = findViewById(R.id.fotorecycleview);
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
+        // ...
+
+
+        // Chamar a api de foto
+        getAllPhotos();
+
+    }
+
+    private void getAllPhotos() {
+        String url = "https://picsum.photos";
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PhotoApi photoApi = retrofit.create(PhotoApi.class);
+
+//        Call<List<Photo>> call = photoApi.getAllPhotos();
+
+        Call<List<Photo>> callOne = photoApi.getPhoto(5);
+
+//        call.enqueue(new Callback<List<Photo>>() {
+//            @Override
+//            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
+//                List<Photo> photos = response.body();
+//                recycleView.setAdapter(new PhotoAdapter(photos));
+//            }
+//            @Override
+//            public void onFailure(Call<List<Photo>> call, Throwable t) {
+//            }
+//        });
+
+        callOne.enqueue(new Callback<List<Photo>>() {
+            @Override
+            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
+                List<Photo> body = response.body();
+                recycleView.setAdapter(new PhotoAdapter(body));
+            }
+            @Override
+            public void onFailure(Call<List<Photo>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+}
