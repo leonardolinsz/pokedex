@@ -20,17 +20,22 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        ImageView gifImageView = findViewById(R.id.pikachugif);
+        ImageView imageView = findViewById(R.id.gifsplashscreen);
 
-        Glide.with(this)
-                .asGif()
-                .load(R.drawable.pikachugif)
-                .into(gifImageView);
+        Glide.with(this).load(R.drawable.pikachugif).into(imageView);
 
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashScreen.this, Home.class);
-            startActivity(intent);
-            finish();
-        }, 4000); // 4000ms = 4 segundos
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                abrirTela();
+            }
+        }, 3000);
     }
+
+    void abrirTela(){
+        Intent intent = new Intent(this, PokedexCards.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
