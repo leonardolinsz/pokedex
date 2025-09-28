@@ -1,5 +1,7 @@
 package com.example.pokedex.adapter;
 
+import static com.example.pokedex.utils.TypeUtils.getColorRes;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.GradientDrawable;
@@ -17,23 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pokedex.R;
 import com.example.pokedex.dto.PokemonDTO;
-import com.example.pokedex.dto.TypeDetail;
 import com.example.pokedex.dto.TypeSlotDTO;
+import com.example.pokedex.utils.TypeUtils;
 import com.google.android.material.chip.Chip;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
 
     private final List<PokemonDTO> pokemonList;
     private final OnItemClickListener listener;
-    private final Map<Integer, GradientDrawable> pokemonBackgrounds = new HashMap<>();
 
-
-    // Construtor
     public PokemonAdapter(List<PokemonDTO> pokemonList, OnItemClickListener listener) {
         this.pokemonList = pokemonList;
         this.listener = listener;
@@ -50,43 +47,34 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
     @Override
     public void onBindViewHolder(@NonNull PokemonViewHolder holder, int position) {
         PokemonDTO pokemon = pokemonList.get(position);
-        holder.nomePokemon.setText(pokemon.getName());
+
+        holder.nomePokemon.setText(TypeUtils.capitalize(pokemon.getName()));
+
+        String formattedId = String.format(Locale.US, "#%03d", pokemon.getId());
+        holder.idPokemon.setText(formattedId);
 
         List<TypeSlotDTO> types = pokemon.getTypes();
         if (types != null && !types.isEmpty()) {
             String type1 = types.get(0).getType().getName();
-            holder.chip1.setText(type1);
+
+            holder.chip1.setText(TypeUtils.capitalize(type1));
             setChipColor(holder.chip1, type1);
             holder.chip1.setVisibility(View.VISIBLE);
 
             if (types.size() > 1) {
                 String type2 = types.get(1).getType().getName();
-                holder.chip2.setText(type2);
+                holder.chip2.setText(TypeUtils.capitalize(type2));
                 setChipColor(holder.chip2, type2);
                 holder.chip2.setVisibility(View.VISIBLE);
             } else {
                 holder.chip2.setVisibility(View.GONE);
             }
 
-            int pokemonId = pokemon.getId();
-            if (pokemonBackgrounds.containsKey(pokemonId)) {
-                holder.cardView.setBackground(pokemonBackgrounds.get(pokemonId));
-            } else {
-                GradientDrawable gd;
-                if (types.size() > 1 && !type1.equalsIgnoreCase(types.get(1).getType().getName())) {
-                    int color1 = ContextCompat.getColor(holder.cardView.getContext(), getColorRes(type1, false));
-                    int color2 = ContextCompat.getColor(holder.cardView.getContext(), getColorRes(types.get(1).getType().getName(), false));
-                    gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{color1, color2});
-                } else {
-                    int color = ContextCompat.getColor(holder.cardView.getContext(), getColorRes(type1, false));
-                    gd = new GradientDrawable();
-                    gd.setColor(color);
-                }
-                gd.setCornerRadius(holder.cardView.getRadius());
-                holder.cardView.setBackground(gd);
-
-                pokemonBackgrounds.put(pokemonId, gd);
-            }
+            setCardColor(holder.cardView, type1);
+        } else {
+            holder.chip1.setVisibility(View.GONE);
+            holder.chip2.setVisibility(View.GONE);
+            setCardColor(holder.cardView, null);
         }
 
         Glide.with(holder.imgPhoto.getContext())
@@ -100,15 +88,6 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         });
     }
 
-    private void setCardGradient(CardView cardView, int colorStart, int colorEnd) {
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.LEFT_RIGHT,
-                new int[]{colorStart, colorEnd}
-        );
-        gd.setCornerRadius(cardView.getRadius());
-        cardView.setBackground(gd);
-    }
-
     @Override
     public int getItemCount() {
         return pokemonList.size();
@@ -116,12 +95,13 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
     public class PokemonViewHolder extends RecyclerView.ViewHolder {
         ImageView imgPhoto;
-        TextView nomePokemon;
+        TextView nomePokemon, idPokemon;
         Chip chip1, chip2;
         CardView cardView;
 
         public PokemonViewHolder(@NonNull View itemView) {
             super(itemView);
+            idPokemon = itemView.findViewById(R.id.idPokemon);
             cardView = itemView.findViewById(R.id.cardView);
             imgPhoto = itemView.findViewById(R.id.imgPhoto);
             nomePokemon = itemView.findViewById(R.id.nomePokemon);
@@ -145,34 +125,5 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         int color = ContextCompat.getColor(cardView.getContext(), colorRes);
         cardView.setCardBackgroundColor(color);
     }
-
-    private int getColorRes(String typeName, boolean isChip) {
-        if (typeName == null) return isChip ? R.color.type_default : R.color.card_default;
-
-        typeName = typeName.trim().toLowerCase(); // remove espaços extras
-
-        switch (typeName) {
-            case "normal": return isChip ? R.color.type_normal : R.color.card_normal;
-            case "fire": return isChip ? R.color.type_fire : R.color.card_fire;
-            case "water": return isChip ? R.color.type_water : R.color.card_water;
-            case "electric": return isChip ? R.color.type_electric : R.color.card_electric;
-            case "grass": return isChip ? R.color.type_grass : R.color.card_grass;
-            case "ice": return isChip ? R.color.type_ice : R.color.card_ice;
-            case "fighting": return isChip ? R.color.type_fighting : R.color.card_fighting;
-            case "poison": return isChip ? R.color.type_poison : R.color.card_poison;
-            case "ground": return isChip ? R.color.type_ground : R.color.card_ground;
-            case "flying": return isChip ? R.color.type_flying : R.color.card_flying;
-            case "psychic": return isChip ? R.color.type_psychic : R.color.card_psychic;
-            case "bug": return isChip ? R.color.type_bug : R.color.card_bug;
-            case "rock": return isChip ? R.color.type_rock : R.color.card_rock;
-            case "ghost": return isChip ? R.color.type_ghost : R.color.card_ghost;
-            case "dragon": return isChip ? R.color.type_dragon : R.color.card_dragon;
-            case "dark": return isChip ? R.color.type_dark : R.color.card_dark;
-            case "steel": return isChip ? R.color.type_steel : R.color.card_steel;
-            case "fairy": return isChip ? R.color.type_fairy : R.color.card_fairy;
-            default: return isChip ? R.color.type_default : R.color.card_default;
-        }
-    }
-
 
 }

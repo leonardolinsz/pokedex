@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Pokedex"
         tools:targetApi="31">
         <activity
+            android:name=".PokemonDetails"
+            android:exported="false" />
+        <activity
             android:name=".pokemonDetailBottomsheet"
             android:exported="false" />
         <activity

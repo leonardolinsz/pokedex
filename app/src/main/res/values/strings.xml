@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Pokedex</string>
+
+    <string-array name="order_options">
+        <item>A-Z (Nome)</item>
+        <item>Z-A (Nome)</item>
+        <item>Menor ID primeiro</item>
+        <item>Maior ID primeiro</item>
+    </string-array>
+
 </resources>
