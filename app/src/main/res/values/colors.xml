@@ -3,7 +3,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="card_background">#FFFFFF</color>
-    <!-- Cores claras (para CardView) -->
     <color name="card_normal">#F5F5F5</color>
     <color name="card_fire">#FFD1B3</color>
     <color name="card_water">#B3E0FF</color>
@@ -23,7 +22,6 @@
     <color name="card_steel">#E0E0E0</color>
     <color name="card_fairy">#FFE0FF</color>
 
-    <!-- Cores escuras (para Chip) -->
     <color name="type_normal">#A8A77A</color>
     <color name="type_fire">#EE8130</color>
     <color name="type_water">#6390F0</color>

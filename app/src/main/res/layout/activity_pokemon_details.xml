@@ -27,10 +27,10 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:background="#00FFFFFF"
+        android:onClick="favoritar"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="favoritar"
         app:srcCompat="@drawable/ic_favorite_border" />
 
     <TextView
@@ -38,13 +38,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="81dp"
+        android:layout_marginTop="32dp"
         android:text="#004"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/favoriteDetails"
-        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btnVoltarDetails"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,22 +58,10 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/descriptionDetails"
-        android:layout_width="364dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Descrição grande sobre o pokemon e blablablblablblabblalbaalblababllblablbalblablbalbalablbalablab"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutTipos" />
-
-    <TextView
         android:id="@+id/nomePokemonDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif"
         android:text="NomePokemon"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -87,188 +74,224 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomePokemonDetails" />
 
+    <TextView
+        android:id="@+id/descriptionDetails"
+        android:layout_width="364dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Descrição do Pokémon..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTipos" />
+
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="385dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="16dp"
+        android:id="@+id/statsContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionDetails">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#E7DEDE"
-            android:backgroundTint="#CECBCB"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:id="@+id/alturaDetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Altura"
-                android:textAlignment="center" />
+                android:text="HP:"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressHp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:layout_weight="1"
+                android:max="255"
+                android:progress="0"
+                android:progressTint="#F44336"/>
 
             <TextView
-                android:id="@+id/tvAltura"
-                android:layout_width="match_parent"
+                android:id="@+id/valueHp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.5 m"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
+                android:layout_marginStart="8dp"
+                android:text="0"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#E7DEDE"
-            android:backgroundTint="#CECBCB"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:id="@+id/pesoDetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Peso"
-                android:textAlignment="center" />
+                android:text="Ataque:"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressAtk"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:layout_weight="1"
+                android:max="255"
+                android:progress="0"
+                android:progressTint="#FF9800"/>
 
             <TextView
-                android:id="@+id/tvPeso"
-                android:layout_width="match_parent"
+                android:id="@+id/valueAtk"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:text="57.49 kg"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="8dp"
+                android:text="0"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#E7DEDE"
-            android:backgroundTint="#CECBCB"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/vidaDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Vida"
-                android:textAlignment="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvVida"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:text="13 hp"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="385dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#9B9B9B"
-            android:backgroundTint="#CECBCB"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ataque especial" />
+                android:text="Defesa:"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressDef"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:layout_weight="1"
+                android:max="255"
+                android:progress="0"
+                android:progressTint="#2196F3"/>
 
             <TextView
-                android:id="@+id/tvAtaqueEspecial"
+                android:id="@+id/valueDef"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="60"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="8dp"
+                android:text="0"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#9B9B9B"
-            android:backgroundTint="#CECBCB"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Velocidade" />
+                android:text="Sp. Ataque:"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressSpAtk"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:layout_weight="1"
+                android:max="255"
+                android:progress="0"
+                android:progressTint="#9C27B0"/>
 
             <TextView
-                android:id="@+id/tvVelocidade"
+                android:id="@+id/valueSpAtk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="60"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="8dp"
+                android:text="0"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#9B9B9B"
-            android:backgroundTint="#CECBCB"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Defesa especial" />
+                android:text="Sp. Defesa:"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressSpDef"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:layout_weight="1"
+                android:max="255"
+                android:progress="0"
+                android:progressTint="#03A9F4"/>
 
             <TextView
-                android:id="@+id/tvDefesaEspecial"
+                android:id="@+id/valueSpDef"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="60"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="8dp"
+                android:text="0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Velocidade:"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressSpeed"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:layout_weight="1"
+                android:max="255"
+                android:progress="0"
+                android:progressTint="#4CAF50"/>
+
+            <TextView
+                android:id="@+id/valueSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="0"/>
         </LinearLayout>
 
     </LinearLayout>

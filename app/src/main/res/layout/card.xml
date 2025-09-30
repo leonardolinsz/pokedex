@@ -48,7 +48,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp" />
 
-        <!-- Chips dos tipos -->
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/typeGroup"
             android:layout_width="wrap_content"

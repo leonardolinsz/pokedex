@@ -52,7 +52,7 @@ public class PokedexCards extends AppCompatActivity implements PokemonFilterBott
 
     private Set<String> currentSelectedTypes = new HashSet<>();
     private boolean currentShowFavorites = false;
-    private String currentOrder = "Menor ID primeiro"; // Padrão inicial
+    private String currentOrder = "Menor ID primeiro";
 
     @SuppressLint("MissingInflatedId")
     @Override

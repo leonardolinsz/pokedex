@@ -14,9 +14,6 @@ public interface PokemonFeign {
     @GET("pokemon?limit=100&offset=0")
     Call<PokemonListResponseDTO> getAllPokemons();
 
-    @GET("pokemon")
-    Call<PokemonListResponseDTO> getAllPokemons(@Query("limit") int limit, @Query("offset") int offset);
-
     @GET("pokemon/{name}")
     Call<PokemonDTO> getPokemonByName(@Path("name") String name);
 

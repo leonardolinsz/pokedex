@@ -81,8 +81,6 @@ public class PokemonFilterBottomSheet extends BottomSheetDialogFragment {
         }
     }
 
-
-
     private void applyFilters() {
         Set<String> selectedTypes = new HashSet<>();
         for (int id : chipGroupTypes.getCheckedChipIds()) {
